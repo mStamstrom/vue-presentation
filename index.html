@@ -25,8 +25,239 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Vue.png" style="background-color: transparent; border: none; box-shadow: none;"/>
+          <h1>Coding with a Vue</h1>
+        </section>
+				<!-- Vue är ett av dem mest populära front-end ramverk och det mest trendiga frontend ramverket -->
+				<!-- Idag kommer vi kolla på vad vue är för något, hur vue fungerar och sedan med övningar testa att bygga en väder applikation med Vue -->
+				<section>
+					<section class="vertical">
+						<h2>Vad är Vue?</h2>
+					</section>
+					<section class="vertical">
+						Innan Vue, React, Angular ...
+					</section>
+					<!-- Dem senaste 10 åren har hemsidor blivit mer dynamiska och kraftfulla tack vare utvecklingen hos javascript. -->
+					<!-- I och med detta har man även börjat flytta mer logik ifrån backend till frontend vilket har resulterat i många javascript filer som är tätt kopplat till vyerna -->
+					<!-- Detta är ofta svårt att underhålla och svårt att hålla kod isolerad och kunna genomföra förändringar utan att det får sido effekter -->
+					<section data-markdown>
+						Vue är ett ramverk som bygger UI interface
+						<!-- Vue hanterar vy uppdateringar av DOM med hjälp av MVVM. Så vi har en model och när den uppdateras kommer vyn att updateras -->
+					</section>
+					<section>
+						Vue är ett progressivt ramverk
+						<!-- Vue kan leva tillsammans med andra ramverk och därmed dels bara vara på en liten del av en hemsida -->
+						<!-- Eller hantera en hel SPA applikation -->
+					</section>
+					<section>
+						<p>Komponenter</p>
+						<!-- När man bygger en SPA med Vue, delar man upp sin vy i små återanvändabara komponenter som utgör sidan. -->
+						<!-- Detta medför också fördelen att logiken är isolerad per komponent och kan därmed ändra på logik och veta vad det kommer påverka -->
+						<img src="img/component-tree.PNG" />
+					</section>
+				</section>
+				<section>
+						<section>
+							<h2>Varför använda Vue?</h2>
+							<ul>
+							<li class="fragment fade-up">Lätt att komma igång och lära sig</li>
+							<!-- Det som krävs för att komma igång med Vue är HTML, CSS och Javascript -->
+							<li class="fragment fade-up">Skalbart</li>
+							<!-- kan växla mellan att enbart vara ett bibliotek för att hantera UI -->
+							<!-- eller ett fullstakat ramverk med router, global state hantering osv. -->
+							<li class="fragment fade-up">Snabbt</li>
+							<!-- Snabba vy uppdateringar tack vare VDOM och kompilerar ner til ett relativt litet paket -->
+							<!-- Vue hanterar alla optimeringar -->
+							<li class="fragment fade-up">Lätt att underhålla</li>
+							<li class="fragment fade-up">Testbar kodbas</li>
+							<!-- Dessa 2 tack vare att man delar upp sin kodbas i vue komponenter som är små och lätta att underhålla -->
+							</ul>
+						</section>
+						<section>
+							Lätt att komma igång och lära sig
+							<iframe src="https://codesandbox.io/embed/vue-template-y94m0?fontsize=14" title="Vue Template" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+						</section>
+						<section>
+							Virtual Document Object Model (VDOM)
+							<!-- Om vi börjar man vad DOM är, så är det en abstraktion av strukturerad text, vilket vi web utvecklar brukar kalla HTML kod -->
+							<!-- DOM har ett API för att ändra på DOM och hämta information ifrån DOM-->
+							<!-- DOM är beskriven enligt en trädstruktur, vilket gör den enkelt att traversera trädet, dock behöver det inte alltid går så fort -->
+							<!-- I och med att hemsidor växt allt mer blir DOM för en hemsida allt större och svårare att hantera med hjälp av standard API -->
+							<!-- 2 stora problem finns med det här, det är svårt att hantera träd traverseringen när man har en stor SPA applikation och det är oeffektivt -->
+							<!-- Genom att han komponenter löser man problement med trädtraversering, då Vue kommer hantera det -->
+							<!-- VDOM är en abstraction av DOMen, vilket gör att Vue kan jobba mot en kopia av DOM som inte är browser specifik och snabbare än dem faktiska DOM operationerna -->
+							<!-- Med hjälp av VDOM kan Vue även göra delvis uppdateringar och inte uppdatera hela applikationen varje gång något ändras -->
+						</section>
+				</section>
+				<section>
+					<section>
+						<h2>Single file components</h2>
+						<!-- När man bygger upp sin applikation med Vue, brukar man använda single file komponents för att få en bra struktur-->
+						<!-- Varje komponent består av HTML, CSS och Javscript uppdelade i 3 sektioner i filen -->
+						<!-- CSS kan vara scoped, vilket är att föredra. När CSS är scoped klasserna vara unika för den komponenten och klassnamn kommer inte att krocka med andra komponenter som har samma klassnamn -->
+					</section>
+					<section>
+              <pre><code class="hljs" style="height: 100%">
+<script>
+  export default {
+    name: 'app',
+    data: () => ({ message: 'Hello Vue!' }),
+  }
+</script>
+
+<template>
+  <div class="app" >
+    {{ message }}
+  </div>
+</template>
+
+<style scoped>
+  .app {
+    color: green;
+  }
+</style>
+							</pre></code>
+					</section>
+				</section>
+				<section>
+						<section>
+							<h2>Data</h2>
+							<!-- Data är det som medför en vy uppdatering, det är varje komponents model. -->
+						</section>
+						<section>
+								<pre><code class="hljs" style="height: 100%">
+<script>
+  export default {
+  name: 'app',
+  data: () => ({
+    clicks: 0,
+  }),
+  methods: {
+    onClick() {
+      this.clicks = this.clicks + 1;
+    },
+  },
+}
+</script>
+
+<template>
+  <div>
+    <button @click="onClick">click me</button>
+    <div>
+      You clicked {{ clicks }} times!!
+    </div>
+  </div>
+</template>
+								</code></pre>
+							<!-- Om vi tänker oss det är exemplet, så varje gång som ett klick sker, kommer vyn att uppdateras och det är eftersom att clicks ändras -->
+							<!-- Hur Vue vet att göra en uppdatering är att när komponenten skapas upp så skapar den getters/setters metoder för alla properties som ligger i data -->
+							<!-- och när en av dessa properties i data ändras för Vy ett event om att den komponent behöver uppdateras och uppdaterar -->
+					</section>
+        </section>
+        <section>
+          <section>
+            <h2>Template syntax</h2>
+          </section>
+          <section>
+            Bracets
+<pre><code class="hljs">
+<div>
+  {{ message }}
+</div>
+</code></pre>
+          </section>
+          <section>
+            Data binding
+<pre><code class="hljs">
+<h1 v-on:"title">
+  {{ message }}
+</h1>
+
+<h1 :"title">
+  {{ message }}
+</h1>
+</code></pre>
+          </section>   
+          <section>
+            Events
+<pre><code class="hljs">
+<button v-on:click="actionOnClick">
+  click me
+</button>
+
+<!-- shorthand -->
+<button @click="actionOnClick">
+  click me
+</button>
+</code></pre>
+          </section>
+          <section>
+            v-if vs v-show
+<pre><code class="hljs">
+<div v-if="show"></div>
+
+<div v-show="show"></div>
+</code></pre>
+          </section>
+          <section>
+            v-for
+<pre><code class="hljs">
+<div v-for="item in items" :key="item.id">
+  {{ item.name }}
+</div>
+</code></pre>
+          </section>
+        </section>
+        <section>
+            <h2>Computed property</h2>
+<pre><code class="hljs">
+computed: {
+  getName() {
+    return this.message.firstName + ' ' + this.message.lastName;
+  }
+}
+</code></pre>
+        </section>
+        <section>
+            <h2>Watch property</h2>
+<pre><code class="hljs">
+watch: {
+  message(value) {
+    // listen for message updates
+  }
+}
+</code></pre>
+        </section>
+        <section>
+          <section><h2>Komponent kommunikation</h2></section>
+          <section>
+            <img src="https://thepracticaldev.s3.amazonaws.com/i/hw0ifrkkuciqgucy9sm6.png" />
+          </section>
+          <section>
+            <p>Props exampel</p>
+            <img style="width: 45%" src="img/component-communication-parent.PNG" />
+            <img style="width: 45%" src="img/component-communication-child.PNG" />
+          </section>
+        </section>
+				<section>
+					<p>Lifecycle events</p>
+					<img height="20%" width="20%" src="img/lifecycle.png"></img>
+        </section>
+        <section>
+          <h2>Nästa steg</h2>
+          <ul>
+            <li class="fragment fade-up">vue-router</li>
+            <li class="fragment fade-up">vue-cli</li>
+            <li class="fragment fade-up">vuex</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Frågor?</h2>
+        </section>
+        <section>
+          <h1>Dags att koda Vue!!</h1>
+        </section>
 			</div>
 		</div>
 
