@@ -123,7 +123,8 @@
 				<section>
 						<section>
 							<h2>Data</h2>
-							<!-- Data är det som medför en vy uppdatering, det är varje komponents model. -->
+              <!-- Data är det som medför en vy uppdatering, det är varje komponents model. När man lägger till en property, så kommer vy skapa getters och setter för den property
+              Så när en property sedan ändras, så kommer vy få ett event om den uppdateringen och kan sedan bestämma när den ska uppdatera vyn-->
 						</section>
 						<section>
 								<pre><code class="hljs" style="height: 100%">
@@ -170,11 +171,11 @@
           <section>
             Data binding
 <pre><code class="hljs">
-<h1 v-on:"title">
+<h1 v-on:title="title" >
   {{ message }}
 </h1>
 
-<h1 :"title">
+<h1 :title="title" >
   {{ message }}
 </h1>
 </code></pre>
@@ -235,7 +236,7 @@ watch: {
             <img src="https://thepracticaldev.s3.amazonaws.com/i/hw0ifrkkuciqgucy9sm6.png" />
           </section>
           <section>
-            <p>Props exampel</p>
+            <p>Props exempel</p>
             <img style="width: 45%" src="img/component-communication-parent.PNG" />
             <img style="width: 45%" src="img/component-communication-child.PNG" />
           </section>
